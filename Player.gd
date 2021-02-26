@@ -13,7 +13,7 @@ func _ready():
 	pass
 	
 func _physics_process(delta):
-	inputVector.x = Input.get_action_strength("rightwards") - Input.get_action_strength("leftwards")
+	inputVector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	velo.x = inputVector.x * MAXSPD
 	move_and_slide(velo, Vector2.UP)
 	if !is_on_floor():
@@ -25,7 +25,7 @@ func _physics_process(delta):
 		animation.play("Run")
 	
 	if is_on_floor():
-		velo.y = 10
+		velo.y = 20
 		if Input.is_action_just_pressed("ui_up"):
 			velo.y = -125
 	
@@ -33,6 +33,3 @@ func _physics_process(delta):
 		sprite.flip_h = false
 	if inputVector.x < 0:
 		sprite.flip_h = true
-	
-	if Input.is_action_just_pressed("upwards"):
-		velo.y = - 100
