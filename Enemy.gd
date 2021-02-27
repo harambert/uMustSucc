@@ -1,13 +1,16 @@
 extends KinematicBody2D
 
-const MAXSPD = 10
+const MAXSPD: float = 20.0
+const ACC: float = 0.3
+
 onready var main: Node2D = get_tree().current_scene
-onready var player: KinematicBody2D = main.player
+onready var player: KinematicBody2D = main.find_node("Player")
+
+var velo: Vector2 = Vector2(0,0)
 
 func _ready():
-	pass
+	velo = position.direction_to(player.position)
 	
 func _physics_process(_delta):
-	if player == null:
-		return
-	move_and_slide(position.direction_to(player.position) * 50, Vector2.UP)
+	velo = (velo + position.direction_to(player.position) * ACC).clamped(MAXSPD)
+	move_and_slide(velo, Vector2.UP)
